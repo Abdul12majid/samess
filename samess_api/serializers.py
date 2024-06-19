@@ -8,6 +8,7 @@ class MessageSerializer(serializers.Serializer):
 	sender=serializers.CharField(max_length=500)
 	receiver=serializers.CharField(max_length=500)
 	text=serializers.CharField(max_length=500)
+	iv=serializers.CharField(max_length=500)
 
 
 class PasswordSerializer(serializers.Serializer):

@@ -21,12 +21,14 @@ def create_message(request):
 	if serializer.is_valid():
 		receiver = request.data['receiver']
 		sender = request.data['sender']
+		iv = request.data['iv']
 		text = request.data['text']
 		message = Message.objects.create(
 				receiver=receiver,
 				sender=sender,
 				text=text,
 				status=default,
+				iv=iv,
 			)
 		message.save()
 		return Response({

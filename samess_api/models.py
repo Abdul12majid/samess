@@ -24,6 +24,7 @@ class Sender(models.Model):
 class Message(models.Model):
 	sender = models.CharField(max_length=20)
 	receiver = models.CharField(max_length=20)
+	iv = models.CharField(default="iv",max_length=500)
 	status = models.ForeignKey(Status, blank=True, on_delete=models.CASCADE)
 	text = models.TextField("Message", blank=True)
 
