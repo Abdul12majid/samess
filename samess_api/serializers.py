@@ -10,6 +10,19 @@ class MessageSerializer(serializers.Serializer):
 	text=serializers.CharField(max_length=500)
 	iv=serializers.CharField(max_length=500)
 
+class MessageSerializer2(serializers.ModelSerializer):
+	seen_status = serializers.SerializerMethodField()
+	def get_seen_status(self, obj):
+		if obj.status.id == 1:
+			return 'Unseen'
+		elif obj.status.id == 2:
+			return 'Seen'
+		else:
+			return 'unknown'
+	class Meta:
+		model=Message
+		fields=('id', 'sender', 'receiver', 'iv', 'text', 'seen_status',)
+
 
 class PasswordSerializer(serializers.Serializer):
 	old_password=serializers.CharField()

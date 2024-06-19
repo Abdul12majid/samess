@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import MessageSerializer
+from .serializers import MessageSerializer, MessageSerializer2
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -40,7 +40,7 @@ def create_message(request):
 @api_view(['GET'])
 def get_messages(request):
 	messages=Message.objects.all()
-	serializer=MessageSerializer(messages, many=True)
+	serializer=MessageSerializer2(messages, many=True)
 	return Response(serializer.data)
 
 @api_view(['GET'])
@@ -52,9 +52,16 @@ def get_message(request, pk):
 	for i in message:
 		i.status = default2
 		i.save()
-	serializer=MessageSerializer(message, many=True)
+	serializer=MessageSerializer2(message, many=True)
 	return Response(serializer.data)
 	
-
+@api_view(['POST', 'GET'])
+def status_seen(request, pk):
+	default2 = Status.objects.get(id=2)
+	message = get_object_or_404(Message, id=pk)
+	message.status = default2
+	message.save()
+	serializer=MessageSerializer2(message, many=False)
+	return Response(serializer.data, status=200)
 
 
