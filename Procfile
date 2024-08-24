@@ -1,0 +1,1 @@
+web: gunicorn samess.wsgi --log-file -
